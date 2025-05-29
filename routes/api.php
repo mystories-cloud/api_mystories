@@ -15,5 +15,6 @@ Route::middleware('auth:sanctum')->group(function() {
         $router->get('traffic-sources', [AnalyticsController::class, 'getTrafficSources']);     
         $router->get('country-analytics', [AnalyticsController::class, 'getCountryAnalytics']);     
         $router->get('monthly-analytics', [AnalyticsController::class, 'monthlyAnalytics']);     
+        $router->get('page-analytics', [AnalyticsController::class, 'getPageAnalytics']);     
     });
 });

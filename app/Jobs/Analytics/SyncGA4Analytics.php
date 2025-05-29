@@ -4,9 +4,11 @@ namespace App\Jobs\Analytics;
 
 use App\Models\CountryAnalytics;
 use App\Models\KeyMetric;
+use App\Models\PageAnalytic;
 use App\Models\TrafficSource;
 use App\Services\GoogleAnalyticsService;
 use App\Transformers\GA4DataRowTransformer;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -43,14 +45,33 @@ class SyncGA4Analytics implements ShouldQueue
         //     TrafficSource::insert($sources);
         // }
 
-        $countryAnalytics = $service->getData(new GA4DataRowTransformer, '2025-05-01', '2025-05-28', 'country_analytics');
+        // $countryAnalytics = $service->getData(new GA4DataRowTransformer, '2025-05-01', '2025-05-28', 'country_analytics');
+
+        // // dd($countryAnalytics);
+
+        // foreach($countryAnalytics['metrics'] as $index => $row)
+        // {
+        //     $analytics = mapArrayToCountryTable($row, $countryAnalytics['dimensions'][$index]);
+        //     CountryAnalytics::insert($analytics);
+        // } 
+
+        $pageAnalytics = $service->getData(new GA4DataRowTransformer, '2025-05-01', '2025-05-28', 'page_analytics');
 
         // dd($countryAnalytics);
 
-        foreach($countryAnalytics['metrics'] as $index => $row)
+        foreach($pageAnalytics['metrics'] as $index => $row)
         {
-            $analytics = mapArrayToCountryTable($row, $countryAnalytics['dimensions'][$index]);
-            CountryAnalytics::insert($analytics);
+            $dimensions = $pageAnalytics['dimensions'][$index];
+
+            PageAnalytic::insert([
+                'page_views' => $row['screenPageViews'],
+                'new_users' => $row['newUsers'],
+                'url' => $dimensions['fullPageUrl'],
+                'path' => $dimensions['pagePath'],
+                'title' => $dimensions['pageTitle'],
+                'date' => Carbon::createFromFormat('YmdH', $dimensions['dateHour']),
+            ]);
         } 
     }
 }
+ 

@@ -24,7 +24,7 @@ return [
                 'user_engagement',
             ],
         ],
-        'pages_analytics' => [
+        'page_analytics' => [
             'metrics' => [
                 'screenPageViews',
                 'newUsers',
@@ -33,7 +33,7 @@ return [
                 'fullPageUrl',
                 'pagePath',
                 'pageTitle',
-                'pageReferrer',
+                'dateHour'
             ],
         ],
         'traffic_sources' => [

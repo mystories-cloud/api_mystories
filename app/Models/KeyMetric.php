@@ -45,7 +45,7 @@ class KeyMetric extends Model
                 return array_key_exists($item, $data) ? $data[$item] : $item;
             }, $expression)) : "";
 
-            $data[$key] = $expression ? eval("return $expression;") : ($data[$key] ?? 0);
+            $data[$key] = round($expression ? eval("return $expression;") : ($data[$key] ?? 0), 2);
         }
 
         return $data;

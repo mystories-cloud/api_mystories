@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CountryAnalytics;
 use App\Models\KeyMetric;
+use App\Models\PageAnalytic;
 use App\Models\TrafficSource;
 use App\Traits\ApiResponse\Response;
 use Carbon\Carbon;
@@ -44,5 +45,10 @@ class AnalyticsController extends Controller
             ->orderBy('day')
             ->get()
             ->groupBy('day'));
+    }
+
+    public function getPageAnalytics()
+    {
+        return $this->response(PageAnalytic::getData());
     }
 }
