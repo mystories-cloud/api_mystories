@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnalyticsController;
 use App\Jobs\Analytics\SyncGA4Analytics;
+use App\Jobs\Analytics\SyncRealtimeGA4Analytics;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Services\GoogleAnalyticsService;
@@ -18,7 +19,8 @@ Route::get('/', function (GoogleAnalyticsService $service) {
     // ]);
 
     // dd(User::first()->createToken('site_token')->plainTextToken);
-    SyncGA4Analytics::dispatch();
+    // SyncGA4Analytics::dispatch();
+    SyncRealtimeGA4Analytics::dispatch();
 });
 
 Route::get('/analytics', [AnalyticsController::class, 'getKeyAnalytics']);

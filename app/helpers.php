@@ -15,55 +15,15 @@ function mapKeyArray(string $key, $class): array
     return $array;
 }
 
+function convertGA4DateHourToDate($dimension)
+{
+    return array_key_exists('dateHour', $dimension) ? Carbon::createFromFormat('YmdH', $dimension['dateHour']) : 
+    Carbon::now()->subMinutes(5)->format('Y-m-d H:i:s');
+}
+
 function mapArray(string $key, $class): array
 {
     return array_map(function ($key) use ($class) {
         return new $class(['name' => $key]);
     }, config('ga4_analytics.' . $key));
-}
-
-
-function mapArrayToMetricTable($row, $dimension)
-{
-    $result = [];
-
-    foreach ($row as $key => $value) {
-        $result[] = [
-            'key' => $key,
-            'value' => $value,
-            'date' => Carbon::createFromFormat('YmdH', $dimension['dateHour']),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ];
-    }
-
-    return $result;
-}
-
-function mapArrayToTrafficSourceTable($row, $dimension)
-{
-    $result = [];
-    foreach ($row as $key => $value) {
-        $result[] = [
-            'source' => $dimension['sessionSource'],
-            'value' => $value,
-            'date' => Carbon::createFromFormat('YmdH', $dimension['dateHour']),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ];
-    }
-    return $result;
-}
-
-function mapArrayToCountryTable($row, $dimension)
-{
-    return [
-        'country' => $dimension['country'],
-        'page_views' => $row['screenPageViews'],
-        'sessions' => $row['sessions'],
-        'newUsers' => $row['newUsers'],
-        'date' => Carbon::createFromFormat('YmdH', $dimension['dateHour']),
-        'created_at' => Carbon::now(),
-        'updated_at' => Carbon::now(),
-    ];
 }

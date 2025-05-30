@@ -7,11 +7,11 @@ return [
                 'userEngagementDuration',
                 'averageSessionDuration',
                 'engagedSessions',
-                'eventCount',
+                // 'eventCount',
             ],
             'dimensions' => [
                 'dateHour',
-                'eventName',
+                // 'eventName',
             ],
             'events' => [
                 'signup',
@@ -48,7 +48,7 @@ return [
         'country_analytics' => [
             'metrics' => [
                 'sessions',
-                'screenPageViews',
+                // 'screenPageViews',
                 'newUsers',
             ],
             'dimensions' => [
@@ -77,16 +77,6 @@ return [
             'dimensions' => [
                 'eventName',
             ],
-            'events' => [
-                'signup',
-                'form_submit',
-                'form_start',
-                'scroll',
-                'sessions_start',
-                'page_view',
-                'first_visit',
-                'user_engagement',
-            ],
         ],
         'country_analytics' => [
             'metrics' => [
@@ -104,21 +94,6 @@ return [
                 'deviceCategory'
             ]
         ],
-        'signup_events_analytics' => [
-            'metrics' => [
-                'eventCount'
-            ],
-            'events' => [
-                'signup_start',
-                'signup_verification',
-                'signup_package_selection',
-                'signup_payment',
-                'signup',
-            ],
-            'dimensions' => [
-                'eventName',
-            ],
-        ],
     ],
     'metric_calculations' => [
         'form_abandon' => [
@@ -134,7 +109,10 @@ return [
             'averageSessionDuration', '/', '60',
         ],
         'userEngagementDuration' => [
-            'userEngagementDuration', '/', '60',
+            'userEngagementDuration', '/', '60', '/', 'first_visit'
         ],
+        'conversion_rate' => [
+            'signup', '/', 'first_visit', '*', '100',
+        ]
     ]
 ];

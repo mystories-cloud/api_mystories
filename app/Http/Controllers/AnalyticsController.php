@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\DB;
 class AnalyticsController extends Controller
 {
     use Response;
+    protected $realtime;
+
+    public function __construct()
+    {
+        $this->realtime = request()->has('realtime') ? request()->get('realtime') : false;
+    }
 
     public function getKeyAnalytics()
     {
@@ -21,7 +27,6 @@ class AnalyticsController extends Controller
 
     public function getTrafficSources()
     {
-        // dd(TrafficSource::getSources());
         return $this->response(TrafficSource::getSources());
     }
 

@@ -11,6 +11,7 @@ use Google\Analytics\Data\V1beta\Filter\NumericFilter;
 use Google\Analytics\Data\V1beta\Filter\NumericFilter\Operation;
 use Google\Analytics\Data\V1beta\FilterExpression;
 use Google\Analytics\Data\V1beta\Metric;
+use Google\Analytics\Data\V1beta\MinuteRange;
 use Google\Analytics\Data\V1beta\RunReportRequest;
 use Google\Analytics\Data\V1beta\NumericValue;
 use Google\Analytics\Data\V1beta\OrderBy;
@@ -51,12 +52,12 @@ class GoogleAnalyticsService
             //     ]),
             // ]),
             'order_bys' => [
-                new OrderBy([ 'dimension' => new OrderBy\DimensionOrderBy(['dimension_name' => 'dateHour']) ]),
+                new OrderBy(['dimension' => new OrderBy\DimensionOrderBy(['dimension_name' => 'dateHour'])]),
             ],
 
-            'metrics' => mapKeyArray('normal.'.$configKey.'.metrics', Metric::class),
+            'metrics' => mapKeyArray('normal.' . $configKey . '.metrics', Metric::class),
 
-            'dimensions' => mapKeyArray('normal.'.$configKey.'.dimensions', Dimension::class),
+            'dimensions' => mapKeyArray('normal.' . $configKey . '.dimensions', Dimension::class),
         ]);
 
         $response = $this->client->runReport($request);
@@ -65,18 +66,22 @@ class GoogleAnalyticsService
         // return $response;
     }
 
-    public function getRealtimeData(GA4DataRowTransformer $transformer)
+    public function getRealtimeData(GA4DataRowTransformer $transformer, $config)
     {
         $request = new RunRealtimeReportRequest([
             'property' => 'properties/' . $this->propertyId,
-            'metrics' => mapKeyArray('realtime.key_metrics.metrics', Metric::class),
-            'dimensions' => mapKeyArray('realtime.key_metrics.dimensions', Dimension::class),
+            'metrics' => mapKeyArray('realtime.' . $config . '.metrics', Metric::class),
+            'dimensions' => mapKeyArray('realtime.' . $config . '.dimensions', Dimension::class),
+            'minute_ranges' => [
+                new MinuteRange([
+                    'start_minutes_ago' => 5,
+                    'end_minutes_ago' => 0,
+                ])
+            ],
         ]);
 
         $response = $this->client->runRealtimeReport($request);
 
-        dd($transformer->transform($response));
-
-        dd($response);
+        return $transformer->transform($response);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -24,11 +25,26 @@ class KeyMetric extends Model
         'session_start',
         'page_view',
         'first_visit',
+        'button_click',
+        'link_click',
+        'click',
         'user_engagement',
         'bounce_rate',
         'engagement_rate',
         'form_abandon',
+        'conversion_rate',
     ];
+
+    public static function insertRows($row, $dimension)
+    {
+        foreach ($row as $key => $value) {
+            static::create([
+                'key' => $key,
+                'value' => $value,
+                'date' => convertGA4DateHourToDate($dimension),
+            ]);
+        }
+    }
 
     public static function getKeyAnalytics()
     {
@@ -37,10 +53,9 @@ class KeyMetric extends Model
             ->pluck('value', 'key')
             ->toArray();
 
-        foreach(self::$metricKeys as $key)
-        {
-            $expression = config('ga4_analytics.metric_calculations.'.$key);
-            
+        foreach (self::$metricKeys as $key) {
+            $expression = config('ga4_analytics.metric_calculations.' . $key);
+
             $expression = $expression ? implode(' ', array_map(function ($item) use ($data) {
                 return array_key_exists($item, $data) ? $data[$item] : $item;
             }, $expression)) : "";
@@ -50,5 +65,4 @@ class KeyMetric extends Model
 
         return $data;
     }
-    
 }

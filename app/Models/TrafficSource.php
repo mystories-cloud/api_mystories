@@ -13,6 +13,17 @@ class TrafficSource extends Model
         'dateHour',
     ];
 
+    public static function insertRow($row, $dimension)
+    {
+        foreach ($row as $key => $value) {
+            static::create([
+                'source' => $dimension['sessionSource'],
+                'value' => $value,
+                'date' => convertGA4DateHourToDate($dimension),
+            ]);
+        }
+    }
+
     public static function getSources()
     {
         return static::select(DB::raw('SUM(value) as count'), DB::raw('REPLACE(REPLACE(source, "(", ""), ")", "") as source'))

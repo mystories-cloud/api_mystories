@@ -15,9 +15,20 @@ class CountryAnalytics extends Model
         'date',
     ];
 
+    public static function insertRow($row, $dimension)
+    {
+        static::create([
+            'country' => $dimension['country'],
+            'page_views' => $row['screenPageViews'],
+            'sessions' => array_key_exists('session', $row) ? $row['sessions'] : 0,
+            'newUsers' => array_key_exists('newUsers', $row) ? $row['newUsers'] : 0,
+            'date' => convertGA4DateHourToDate($dimension),
+        ]);
+    }
+
     public static function getData()
     {
-         return static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(sessions) as sessions'), DB::raw('SUM(newUsers) as newUsers'), 'country')
+        return static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(sessions) as sessions'), DB::raw('SUM(newUsers) as newUsers'), 'country')
             ->groupBy('country')
             ->get();
     }
