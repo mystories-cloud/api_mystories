@@ -14,7 +14,7 @@ class KeyMetric extends Model
         'date'
     ];
 
-    protected static array $metricKeys = [
+    public static array $metricKeys = [
         'userEngagementDuration',
         'averageSessionDuration',
         'engagedSessions',
@@ -48,19 +48,40 @@ class KeyMetric extends Model
 
     public static function getKeyAnalytics()
     {
-        $data = static::select(DB::raw('SUM(value) AS value'), 'key')
-            ->groupBy('key')
+        $data = queryDateFilter(static::select(DB::raw('SUM(value) AS value'), 'key')
+            ->groupBy('key'))
             ->pluck('value', 'key')
             ->toArray();
 
         foreach (self::$metricKeys as $key) {
             $expression = config('ga4_analytics.metric_calculations.' . $key);
 
-            $expression = $expression ? implode(' ', array_map(function ($item) use ($data) {
-                return array_key_exists($item, $data) ? $data[$item] : $item;
-            }, $expression)) : "";
+            $expression = $expression
+                ? implode(' ', array_map(function ($item) use ($data) {
+                    return array_key_exists($item, $data) ? $data[$item] : $item;
+                }, $expression))
+                : "";
 
-            $data[$key] = round($expression ? eval("return $expression;") : ($data[$key] ?? 0), 2);
+            $result = 0;
+
+            if ($expression) {
+                // Use output buffering and error suppression to safely handle eval
+                ob_start();
+                try {
+                    $evaluated = @eval("return $expression;");
+                    if (is_numeric($evaluated)) {
+                        $result = round($evaluated, 2);
+                    }
+                } catch (\Throwable $e) {
+                    // silently catch any errors
+                    $result = 0;
+                }
+                ob_end_clean();
+            } else {
+                $result = round($data[$key] ?? 0, 2);
+            }
+
+            $data[$key] = round($result ? $result: ($data[$key] ?? 0), 2);
         }
 
         return $data;

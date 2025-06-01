@@ -27,3 +27,18 @@ function mapArray(string $key, $class): array
         return new $class(['name' => $key]);
     }, config('ga4_analytics.' . $key));
 }
+
+function queryDateFilter($query) {
+    
+    if(request()->get('from')) 
+    {
+        $query->where('date', '>=', request()->get('from'));
+    }
+
+    if(request()->get('to'))
+    {
+        $query->where('date', '<=', request()->get('to'));
+    }
+
+    return $query;
+}
