@@ -13,6 +13,8 @@ class TrafficSource extends Model
         'dateHour',
     ];
 
+    protected $connection = 'analytics_connection';
+
     public static function insertRow($row, $dimension)
     {
         foreach ($row as $key => $value) {
@@ -26,8 +28,8 @@ class TrafficSource extends Model
 
     public static function getSources()
     {
-        return static::select(DB::raw('SUM(value) as count'), DB::raw('REPLACE(REPLACE(source, "(", ""), ")", "") as source'))
-            ->groupBy('source')
+        return queryDateFilter(static::select(DB::raw('SUM(value) as count'), DB::raw('REPLACE(REPLACE(source, "(", ""), ")", "") as source'))
+            ->groupBy('source'))
             ->pluck('count', 'source')
             ->toArray();
     }

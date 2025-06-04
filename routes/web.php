@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function (GoogleAnalyticsService $service) {
     // return view('welcome');
     // dd($service->getData(new GA4DataRowTransformer,'2025-05-01', '2025-05-28', 'traffic_sources'));
-    // User::create([
-    //     'name' => 'Site User',
-    //     'email' => 'mystories@gmail.com',
-    //     'password' => '1234',
-    //     'type' => 'site',
-    // ]);
+    User::create([
+        'first_name' => 'Site',
+        'last_name' => 'User',
+        'email' => 'mystories@gmail.com',
+        'password' => '1234',
+        'type' => 'site',
+    ]);
 
-    // dd(User::first()->createToken('site_token')->plainTextToken);
+    dd(User::first()->createToken('site_token')->plainTextToken);
     // SyncGA4Analytics::dispatch();
 
      $data = KeyMetric::select(DB::raw('SUM(value) AS value'), 'key')

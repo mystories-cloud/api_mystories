@@ -17,6 +17,8 @@ class PageAnalytic extends Model
         'date',
     ];
 
+    protected $connection = 'analytics_connection';
+
     public static function insertRow($row, $dimension)
     {
         static::create([
@@ -31,8 +33,8 @@ class PageAnalytic extends Model
 
     public static function getData()
     {
-        return static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(new_users) as new_users'), 'path', 'title')
-            ->groupBy('path', 'title')
+        return queryDateFilter(static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(new_users) as new_users'), 'path', 'title')
+            ->groupBy('path', 'title'))
             ->where('path', 'not like', '%payment%')
             ->orderByDesc('page_views')
             ->get();

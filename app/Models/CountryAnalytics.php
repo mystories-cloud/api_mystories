@@ -15,6 +15,8 @@ class CountryAnalytics extends Model
         'date',
     ];
 
+    protected $connection = 'analytics_connection';
+
     public static function insertRow($row, $dimension)
     {
         static::create([
@@ -28,8 +30,8 @@ class CountryAnalytics extends Model
 
     public static function getData()
     {
-        return static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(sessions) as sessions'), DB::raw('SUM(newUsers) as newUsers'), 'country')
-            ->groupBy('country')
+        return queryDateFilter(static::select(DB::raw('SUM(page_views) as page_views'), DB::raw('SUM(sessions) as sessions'), DB::raw('SUM(newUsers) as newUsers'), 'country')
+            ->groupBy('country'))
             ->get();
     }
 }

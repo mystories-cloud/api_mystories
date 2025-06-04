@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +12,8 @@ class KeyMetric extends Model
         'value',
         'date'
     ];
+
+    protected $connection = 'analytics_connection';
 
     public static array $metricKeys = [
         'userEngagementDuration',

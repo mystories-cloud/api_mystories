@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\BetaTesterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -16,5 +18,13 @@ Route::middleware('auth:sanctum')->group(function() {
         $router->get('country-analytics', [AnalyticsController::class, 'getCountryAnalytics']);     
         $router->get('monthly-analytics', [AnalyticsController::class, 'monthlyAnalytics']);     
         $router->get('page-analytics', [AnalyticsController::class, 'getPageAnalytics']);     
+    });
+
+    Route::prefix('beta-tester')->group(function(Router $router) {
+        $router->get('/', [BetaTesterController::class, 'index']);
+    });
+
+    Route::prefix('users')->group(function(Router $router) {
+        $router->get('get-started', [UserController::class, 'getStarted']);
     });
 });
