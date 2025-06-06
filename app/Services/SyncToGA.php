@@ -50,7 +50,7 @@ class SyncToGA
             // 3. Construct the Measurement Protocol payload
             $payload = [
                 'client_id' => $clientId,
-                'timestamp_micros' => $timestampMicros,
+                'timestamp_micros' => '1749218350143000',
                 'ip_override' => $pageView->ip, // Useful for attributing traffic in reports, though not always visible in DebugView
                 'user_properties' => [
                     // User properties are for persistent user attributes, not session-specific data.
@@ -60,9 +60,12 @@ class SyncToGA
                 ],
                 'events' => [
                     [
-                        'name' => 'ad_impression', // Using the standard GA4 event name for page views
+                        'name' => 'page_view', // Using the standard GA4 event name for page views
                         'params' => [
-                            'page_location' => $pageView->url,
+                            'items' => [
+                                'test_item' => 1,
+                            ],
+                            'page_location' => 'https://mystories.cloud',
                             'page_referrer' => '', // Populate this if you have referrer data in your PageView model
                             'session_id' => (int) $sessionId, // 'session_id' is an event parameter, cast to int
                             'engagement_time_msec' => 1000, // Example engagement time (in milliseconds)
