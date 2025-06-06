@@ -69,7 +69,7 @@ class SyncToGA
                             'page_referrer' => '', // Populate this if you have referrer data in your PageView model
                             'session_id' => (int) $sessionId, // 'session_id' is an event parameter, cast to int
                             'engagement_time_msec' => 1000, // Example engagement time (in milliseconds)
-                            'debug_mode' => 1, // *** THIS IS CRUCIAL for events to appear in DebugView! ***
+                            // 'debug_mode' => 1, // *** THIS IS CRUCIAL for events to appear in DebugView! ***
                             // You can add other custom parameters here, e.g., 'utm_source', 'utm_medium', etc.
                             // based on parsing $pageView->url
                         ],
@@ -84,7 +84,7 @@ class SyncToGA
             // 4. Send the request to GA4's Debug endpoint
             // The '/debug/mp/collect' endpoint validates your payload and provides errors,
             // but does NOT send data to your live GA4 reports, making it ideal for testing.
-            $response = Http::post("https://www.google-analytics.com/debug/mp/collect?measurement_id={$measurementId}&api_secret={$apiSecret}", $payload);
+            $response = Http::post("https://www.google-analytics.com/mp/collect?measurement_id={$measurementId}&api_secret={$apiSecret}", $payload);
 
             // 5. Handle the response
             if ($response->successful()) {
