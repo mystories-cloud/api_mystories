@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Tenant\PageView;
+use App\Models\PageView;
 use Illuminate\Support\Facades\Http;
 
 class SyncToGA
