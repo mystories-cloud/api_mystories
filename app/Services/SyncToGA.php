@@ -36,7 +36,7 @@ class SyncToGA
             // You can manually get a client_id from your browser's '_ga' cookie (e.g., "123456789.1678888888")
             // while your browser is in debug mode, and use it here for testing.
             // Otherwise, a newly generated one might not show up in DebugView without prior client-side context.
-            $clientId = 123456789.1678888888;
+            $clientId = $pageView->client_id ?? sprintf('%d.%d', mt_rand(100000000, 999999999), time());
 
             // The 'session_id' should also ideally come from the original frontend session.
             // It's typically a Unix timestamp (in seconds).
@@ -45,7 +45,7 @@ class SyncToGA
             $sessionId = $pageView->session_id ?: Carbon::parse($pageView->created_at)->getTimestamp();
 
             // Convert 'created_at' to microseconds for 'timestamp_micros'.
-            $timestampMicros = Carbon::parse($pageView->created_at)->getTimestampMs() * 1_000;
+            $timestampMicros =  Carbon::now()->getTimestampMs() * 1_000;
 
             // 3. Construct the Measurement Protocol payload
             $payload = [
