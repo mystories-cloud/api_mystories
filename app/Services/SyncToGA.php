@@ -36,7 +36,7 @@ class SyncToGA
             // You can manually get a client_id from your browser's '_ga' cookie (e.g., "123456789.1678888888")
             // while your browser is in debug mode, and use it here for testing.
             // Otherwise, a newly generated one might not show up in DebugView without prior client-side context.
-            $clientId = $pageView->client_id ?? sprintf('%d.%d', mt_rand(100000000, 999999999), time());
+            $clientId = 123456789.1678888888;
 
             // The 'session_id' should also ideally come from the original frontend session.
             // It's typically a Unix timestamp (in seconds).
