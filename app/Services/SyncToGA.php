@@ -63,7 +63,7 @@ class SyncToGA
                         'name' => 'page_view', // Using the standard GA4 event name for page views
                         'params' => [
                             'items' => [
-                                'test_item' => 1,
+                                'test_item' => '1',
                             ],
                             'page_location' => 'https://mystories.cloud',
                             'page_referrer' => '', // Populate this if you have referrer data in your PageView model
