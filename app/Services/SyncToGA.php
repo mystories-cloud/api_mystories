@@ -66,7 +66,7 @@ class SyncToGA
                             'page_referrer' => '', // Populate this if you have referrer data in your PageView model
                             'session_id' => (int) $sessionId, // 'session_id' is an event parameter, cast to int
                             'engagement_time_msec' => 1000, // Example engagement time (in milliseconds)
-                            'debug_mode' => 1, // *** THIS IS CRUCIAL for events to appear in DebugView! ***
+                            'debug_mode' => true, // *** THIS IS CRUCIAL for events to appear in DebugView! ***
                             // You can add other custom parameters here, e.g., 'utm_source', 'utm_medium', etc.
                             // based on parsing $pageView->url
                         ],
