@@ -68,14 +68,14 @@ class SyncToGA
             // 4. Send the request to GA4's Debug endpoint
             // The '/debug/mp/collect' endpoint validates your payload and provides errors,
             // but does NOT send data to your live GA4 reports, making it ideal for testing.
-            print($payload);
+            dump($payload);
             $response = Http::post("https://www.google-analytics.com/mp/collect?measurement_id={$measurementId}&api_secret={$apiSecret}", $payload);
 
             // 5. Handle the response
             if ($response->successful()) {
-                print("GA4 debug events sent successfully for URL: {$pageView->url}. Response: " . $response->body() . "\n");
+                dump("GA4 debug events sent successfully for URL: {$pageView->url}. Response: " . $response->body() . "\n");
             } else {
-                print("Error sending GA4 debug events for URL: {$pageView->url}. Status: " . $response->status() . " - Body: " . $response->body() . "\n");
+                dump("Error sending GA4 debug events for URL: {$pageView->url}. Status: " . $response->status() . " - Body: " . $response->body() . "\n");
             }
         }
     }
