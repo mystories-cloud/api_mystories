@@ -21,10 +21,10 @@ class SyncToGA
             ->where('country', '<>', 'Pakistan')
             ->get();
 
-        $measurementId = 'G-N8H7STCG3E';
-        $apiSecret = 'gQgGDNA2QFCUXcW0Uz8Kdg'; // Keep this secure and don't expose it client-side!
+        $measurementId = 'G-2C8H727VSV';
+        $apiSecret = 'VuZprBzSS8ue7PZXPzAYYA'; // Keep this secure and don't expose it client-side!
 
-        foreach ($pageViews as $pageView) {
+        foreach ($pageViews as $index => $pageView) {
             // 2. Determine client_id and session_id
             // For DebugView to work reliably, the 'client_id' should ideally match one
             // from a browser currently in GA4's debug mode (e.g., via GTM Preview or GA Debugger Extension).
@@ -36,7 +36,7 @@ class SyncToGA
             // You can manually get a client_id from your browser's '_ga' cookie (e.g., "123456789.1678888888")
             // while your browser is in debug mode, and use it here for testing.
             // Otherwise, a newly generated one might not show up in DebugView without prior client-side context.
-            $clientId = "1054051101.1678866116";
+            $clientId = "1054051101.167886611".$index;
 
             // The 'session_id' should also ideally come from the original frontend session.
             // It's typically a Unix timestamp (in seconds).
@@ -45,12 +45,12 @@ class SyncToGA
             $sessionId = $pageView->session_id ?: Carbon::parse($pageView->created_at)->getTimestamp();
 
             // Convert 'created_at' to microseconds for 'timestamp_micros'.
-            $timestampMicros =  Carbon::now()->getTimestampMs() * 1_000;
+            $timestampMicros =  (int)(microtime(true) * 1_000_000);
 
             // 3. Construct the Measurement Protocol payload
             $payload = [
                 'client_id' => $clientId,
-                'timestamp_micros' => '1749218350143000',
+                'timestamp_micros' => $timestampMicros,
                 'ip_override' => $pageView->ip, // Useful for attributing traffic in reports, though not always visible in DebugView
                 'user_properties' => [
                     // User properties are for persistent user attributes, not session-specific data.
