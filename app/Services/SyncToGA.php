@@ -51,46 +51,31 @@ class SyncToGA
             $payload = [
                 'client_id' => $clientId,
                 'timestamp_micros' => $timestampMicros,
-                'ip_override' => $pageView->ip, // Useful for attributing traffic in reports, though not always visible in DebugView
-                'user_properties' => [
-                    // User properties are for persistent user attributes, not session-specific data.
-                    // Only include actual user properties here.
-                    'device_type' => ['value' => $pageView->device_type],
-                    'http_method' => ['value' => 'GET'], // Use $pageView->method if available in your model
-                ],
+                'ip_override' => $pageView->ip,
                 'events' => [
                     [
-                        'name' => 'page_view', // Using the standard GA4 event name for page views
+                        'name' => 'page_view',
                         'params' => [
-                            'items' => [
-                                'item_name' => '1',
-                            ],
                             'page_location' => 'https://mystories.cloud',
-                            'page_referrer' => '', // Populate this if you have referrer data in your PageView model
-                            'session_id' => (int) $sessionId, // 'session_id' is an event parameter, cast to int
-                            'engagement_time_msec' => 1000, // Example engagement time (in milliseconds)
-                            // 'debug_mode' => 1, // *** THIS IS CRUCIAL for events to appear in DebugView! ***
-                            // You can add other custom parameters here, e.g., 'utm_source', 'utm_medium', etc.
-                            // based on parsing $pageView->url
+                            'page_referrer' => '',
+                            'session_id' => (int) $sessionId,
+                            'engagement_time_msec' => 1500,
                         ],
                     ],
-                    // IMPORTANT: 'first_visit' and 'session_start' events are generally auto-collected by
-                    // GA4 client-side tags. Sending them directly via Measurement Protocol is not the primary
-                    // use case and can lead to unexpected behavior or incomplete reporting.
-                    // Focus on sending 'page_view' and other custom events for server-side data.
                 ],
             ];
 
             // 4. Send the request to GA4's Debug endpoint
             // The '/debug/mp/collect' endpoint validates your payload and provides errors,
             // but does NOT send data to your live GA4 reports, making it ideal for testing.
+            print($payload);
             $response = Http::post("https://www.google-analytics.com/mp/collect?measurement_id={$measurementId}&api_secret={$apiSecret}", $payload);
 
             // 5. Handle the response
             if ($response->successful()) {
-                echo "GA4 debug events sent successfully for URL: {$pageView->url}. Response: " . $response->body() . "\n";
+                print("GA4 debug events sent successfully for URL: {$pageView->url}. Response: " . $response->body() . "\n");
             } else {
-                echo "Error sending GA4 debug events for URL: {$pageView->url}. Status: " . $response->status() . " - Body: " . $response->body() . "\n";
+                print("Error sending GA4 debug events for URL: {$pageView->url}. Status: " . $response->status() . " - Body: " . $response->body() . "\n");
             }
         }
     }
