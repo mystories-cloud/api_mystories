@@ -8,7 +8,8 @@ return [
                 'averageSessionDuration',
                 'engagedSessions',
                 'eventCount',
-                'bounceRate'
+                'bounceRate',
+                'engagementRate',
             ],
             'dimensions' => [
                 'dateHour',
@@ -100,9 +101,6 @@ return [
     'metric_calculations' => [
         'form_abandon' => [
             "((", 'form_start', '-', 'form_submit', ')', '/', 'form_start', ')', '*', '100'
-        ],
-        'engagement_rate' => [
-            'engagedSessions', '/', 'session_start', '*', '100',
         ],
         'averageSessionDuration' => [
             'averageSessionDuration', '/', '60',
