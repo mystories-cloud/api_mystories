@@ -108,6 +108,9 @@ return [
         'userEngagementDuration' => [
             'userEngagementDuration', '/', '60'
         ],
+        'engagementRate' => [
+            'engagedSessions', '/', 'session_start', '*', '100',
+        ],
         'bounceRate' => [
             'bounceRate', '/', 'session_start', '*', '100'
         ],
