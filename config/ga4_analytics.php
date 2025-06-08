@@ -48,7 +48,7 @@ return [
         'country_analytics' => [
             'metrics' => [
                 'sessions',
-                // 'screenPageViews',
+                'screenPageViews',
                 'newUsers',
             ],
             'dimensions' => [
