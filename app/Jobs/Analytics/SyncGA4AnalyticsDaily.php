@@ -16,44 +16,48 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
 {
     use Queueable;
 
+    protected $from;
+    protected $to;
+
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct($from = '', $to = '')
     {
-        //
+        $this->from = $from;
+        $this->to = $to;
     }
 
     /**
      * Execute the job.
      */
-    public function handle(GoogleAnalyticsService $service, $from = '', $to = ''): void
+    public function handle(GoogleAnalyticsService $service): void
     {
-        $from = !$from ? Carbon::now()->subDay()->format('Y-m-d') : $from;
-        $to = !$to ? Carbon::now()->subDay()->format('Y-m-d') : $to;
+        $this->from = !$this->from ? Carbon::now()->subDay()->format('Y-m-d') : $this->from;
+        $this->to = !$this->to ? Carbon::now()->subDay()->format('Y-m-d') : $this->to;
         
-        $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
+        $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics');
 
         foreach($keyMetrics['metrics'] as $index => $row)
         {
             KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
         }
 
-        $trafficSources = $service->getData(new GA4DataRowTransformer, $from, $to, 'traffic_sources');
+        $trafficSources = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'traffic_sources');
 
         foreach($trafficSources['metrics'] as $index => $source) 
         {
             TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
         }
 
-        $countryAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'country_analytics');
+        $countryAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'country_analytics');
  
         foreach($countryAnalytics['metrics'] as $index => $row)
         {
             CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
         } 
 
-        $pageAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'page_analytics');
+        $pageAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'page_analytics');
 
         foreach($pageAnalytics['metrics'] as $index => $row)
         {
