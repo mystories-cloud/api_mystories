@@ -57,7 +57,7 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
 
         foreach($pageAnalytics['metrics'] as $index => $row)
         {
-            PageAnalytic::insertRow($row, $$pageAnalytics['dimensions'][$index]);
+            PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
         } 
     }
 }
