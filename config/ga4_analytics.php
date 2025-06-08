@@ -7,13 +7,13 @@ return [
                 'userEngagementDuration',
                 'averageSessionDuration',
                 'engagedSessions',
-                'eventCount',
+                // 'eventCount',
                 'bounceRate',
                 'engagementRate',
             ],
             'dimensions' => [
                 'dateHour',
-                'eventName',
+                // 'eventName',
             ],
             'events' => [
                 'signup',
