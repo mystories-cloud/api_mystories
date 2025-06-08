@@ -7,7 +7,7 @@ return [
                 'userEngagementDuration',
                 'averageSessionDuration',
                 'engagedSessions',
-                // 'eventCount',
+            // 'eventCount',
                 'bounceRate',
                 'engagementRate',
             ],
@@ -106,7 +106,10 @@ return [
             'averageSessionDuration', '/', '60',
         ],
         'userEngagementDuration' => [
-            'userEngagementDuration', '/', '60', '/', 'first_visit'
+            'userEngagementDuration', '/', '60', '*', '100'
+        ],
+        'bounceRate' => [
+            'bounceRate', '/', 'session_start',
         ],
         'conversion_rate' => [
             'signup', '/', 'first_visit', '*', '100',
