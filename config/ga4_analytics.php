@@ -106,10 +106,10 @@ return [
             'averageSessionDuration', '/', '60',
         ],
         'userEngagementDuration' => [
-            'userEngagementDuration', '/', '60', '*', '100'
+            'userEngagementDuration', '/', '60'
         ],
         'bounceRate' => [
-            'bounceRate', '/', 'session_start',
+            'bounceRate', '/', 'session_start', '*', '100'
         ],
         'conversion_rate' => [
             'signup', '/', 'first_visit', '*', '100',
