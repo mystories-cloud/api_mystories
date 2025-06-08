@@ -10,7 +10,7 @@ class TrafficSource extends Model
     public $fillable = [
         'source',
         'value',
-        'dateHour',
+        'date',
     ];
 
     protected $connection = 'analytics_connection';

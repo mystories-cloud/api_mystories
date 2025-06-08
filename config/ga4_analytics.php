@@ -7,11 +7,11 @@ return [
                 'userEngagementDuration',
                 'averageSessionDuration',
                 'engagedSessions',
-                // 'eventCount',
+                'eventCount',
             ],
             'dimensions' => [
                 'dateHour',
-                // 'eventName',
+                'eventName',
             ],
             'events' => [
                 'signup',
@@ -61,7 +61,8 @@ return [
                 'screenPageViews',
             ],
             'dimesions' => [
-                'deviceCategory'
+                'deviceCategory',
+                'dateHour'
             ],
         ],
         'default_dims' => [
