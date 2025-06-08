@@ -27,32 +27,33 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(GoogleAnalyticsService $service): void
+    public function handle(GoogleAnalyticsService $service, $from = '', $to = ''): void
     {
-        $date = Carbon::now()->subDay()->format('Y-m-d');
+        $from = !$from ? Carbon::now()->subDay()->format('Y-m-d') : $from;
+        $to = !$to ? Carbon::now()->subDay()->format('Y-m-d') : $to;
         
-        $keyMetrics = $service->getData(new GA4DataRowTransformer, $date, $date, 'key_metrics');
+        $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
 
         foreach($keyMetrics['metrics'] as $index => $row)
         {
             KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
         }
 
-        $trafficSources = $service->getData(new GA4DataRowTransformer, $date, $date, 'traffic_sources');
+        $trafficSources = $service->getData(new GA4DataRowTransformer, $from, $to, 'traffic_sources');
 
         foreach($trafficSources['metrics'] as $index => $source) 
         {
             TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
         }
 
-        $countryAnalytics = $service->getData(new GA4DataRowTransformer, $date, $date, 'country_analytics');
+        $countryAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'country_analytics');
  
         foreach($countryAnalytics['metrics'] as $index => $row)
         {
             CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
         } 
 
-        $pageAnalytics = $service->getData(new GA4DataRowTransformer, $date, $date, 'page_analytics');
+        $pageAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'page_analytics');
 
         foreach($pageAnalytics['metrics'] as $index => $row)
         {

@@ -60,26 +60,9 @@ class SyncToGA
                             'page_referrer' => '',
                             'session_id' => (int) $sessionId,
                             'engagement_time_msec' => 1500,
+                            'source'
                         ],
-                    ],
-                    [
-                        'name' => 'first_visit',
-                        'params' => [
-                            'page_location' => 'https://mystories.cloud',
-                            'page_referrer' => '',
-                            'session_id' => (int) $sessionId,
-                            'engagement_time_msec' => 1500,
-                        ],
-                    ],
-                    [
-                        'name' => 'scroll',
-                        'params' => [
-                            'page_location' => 'https://mystories.cloud',
-                            'page_referrer' => '',
-                            'session_id' => (int) $sessionId,
-                            'engagement_time_msec' => 1500,
-                        ],
-                    ],
+                    ],                    
                 ],
             ];
 
