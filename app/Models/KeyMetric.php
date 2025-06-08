@@ -30,7 +30,7 @@ class KeyMetric extends Model
         'link_click',
         'click',
         'user_engagement',
-        'bounce_rate',
+        'bounceRate',
         'engagement_rate',
         'form_abandon',
         'conversion_rate',
