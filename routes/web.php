@@ -51,8 +51,8 @@ Route::get('/', function (GoogleAnalyticsService $service) {
     //     return $data;
     // SyncRealtimeGA4Analytics::dispatch();
 
-    $from = '2025-06-01';
-    $to = '2025-06-08';
+    $from = '2025-06-17';
+    $to = '2025-06-18';
 
     $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
 
