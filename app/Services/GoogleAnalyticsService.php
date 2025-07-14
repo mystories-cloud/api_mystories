@@ -6,14 +6,9 @@ use App\Transformers\GA4DataRowTransformer;
 use Google\Analytics\Data\V1beta\Client\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
-use Google\Analytics\Data\V1beta\Filter;
-use Google\Analytics\Data\V1beta\Filter\NumericFilter;
-use Google\Analytics\Data\V1beta\Filter\NumericFilter\Operation;
-use Google\Analytics\Data\V1beta\FilterExpression;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\MinuteRange;
 use Google\Analytics\Data\V1beta\RunReportRequest;
-use Google\Analytics\Data\V1beta\NumericValue;
 use Google\Analytics\Data\V1beta\OrderBy;
 use Google\Analytics\Data\V1beta\RunRealtimeReportRequest;
 

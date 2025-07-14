@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportRequest;
+use App\Imports\BetaTestersImport;
 use App\Models\BetaTester;
+use App\Services\Uploads\CSVUploader;
 use App\Traits\ApiResponse\Response;
+use Exception;
 use Illuminate\Http\Request;
 
 class BetaTesterController extends Controller
@@ -15,7 +19,7 @@ class BetaTesterController extends Controller
     public function index()
     {
         $data = BetaTester::orderByDesc('id')->get();
-        
+
         return $this->response($data);
     }
 
@@ -64,6 +68,27 @@ class BetaTesterController extends Controller
      */
     public function destroy(BetaTester $betaTester)
     {
-        //
+        try {
+
+            $betaTester->forceDelete();
+
+            return response()->json(['message' => 'Your data was deleted successfully'], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function import(ImportRequest $request, CSVUploader $uploader)
+    {
+        try {
+
+            $uploader->import(new BetaTestersImport);
+
+            $data = BetaTester::orderByDesc('id')->get();
+
+            return $this->response($data);
+        } catch (Exception $e) {
+            return $this->response(null, $e);
+        }
     }
 }

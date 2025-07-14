@@ -17,15 +17,8 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function (GoogleAnalyticsService $service) {
     // return view('welcome');
     // dd($service->getData(new GA4DataRowTransformer,'2025-05-01', '2025-05-28', 'traffic_sources'));
-    // User::create([
-    //     'first_name' => 'Site',
-    //     'last_name' => 'User',
-    //     'email' => 'mystories@gmail.com',
-    //     'password' => '1234',
-    //     'type' => 'site',
-    // ]);
-
-    // dd(User::first()->createToken('site_token')->plainTextToken);
+    // dd(DB::connection()->getDatabaseName());
+    dd(User::where('email', 'mystories@gmail.com')->first()->createToken('site_token')->plainTextToken);
     // // SyncGA4Analytics::dispatch();
 
     //  $data = KeyMetric::select(DB::raw('SUM(value) AS value'), 'key')
@@ -51,32 +44,32 @@ Route::get('/', function (GoogleAnalyticsService $service) {
     //     return $data;
     // SyncRealtimeGA4Analytics::dispatch();
 
-    $from = '2025-06-17';
-    $to = '2025-06-18';
+    // $from = '2025-06-17';
+    // $to = '2025-06-18';
 
-    $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
+    // $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
 
-    foreach ($keyMetrics['metrics'] as $index => $row) {
-        KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
-    }
+    // foreach ($keyMetrics['metrics'] as $index => $row) {
+    //     KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
+    // }
 
-    $trafficSources = $service->getData(new GA4DataRowTransformer, $from, $to, 'traffic_sources');
+    // $trafficSources = $service->getData(new GA4DataRowTransformer, $from, $to, 'traffic_sources');
 
-    foreach ($trafficSources['metrics'] as $index => $source) {
-        TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
-    }
+    // foreach ($trafficSources['metrics'] as $index => $source) {
+    //     TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
+    // }
 
-    $countryAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'country_analytics');
+    // $countryAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'country_analytics');
 
-    foreach ($countryAnalytics['metrics'] as $index => $row) {
-        CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
-    }
+    // foreach ($countryAnalytics['metrics'] as $index => $row) {
+    //     CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
+    // }
 
-    $pageAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'page_analytics');
+    // $pageAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'page_analytics');
 
-    foreach ($pageAnalytics['metrics'] as $index => $row) {
-        PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
-    }
+    // foreach ($pageAnalytics['metrics'] as $index => $row) {
+    //     PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
+    // }
 });
 
 Route::get('/analytics', [AnalyticsController::class, 'getKeyAnalytics']);

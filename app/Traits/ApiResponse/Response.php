@@ -22,6 +22,7 @@ Trait Response
 
         if($exception) {
             $this->message = $exception->getMessage();
+            $this->statusCode = 500;
         }
 
         return response()->json(['data' => $data, 'message' => $this->message], $this->statusCode);

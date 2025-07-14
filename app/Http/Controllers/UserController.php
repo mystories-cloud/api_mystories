@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function getStarted()
     {
-        $users = User::where('get_started', true)->orderByDesc('id')->get();
+        $users = User::where('get_started', true)->with('latestRegistrationLog')->orderByDesc('id')->get();
 
         return $this->response($users);
     }

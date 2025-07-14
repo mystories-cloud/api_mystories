@@ -9,6 +9,8 @@ class BetaTester extends Model
     public $fillable = [
         'name',
         'email',
-        'phone'
+        'phone',
+        'date',
+        'time'
     ];
 }

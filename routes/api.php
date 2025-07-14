@@ -18,10 +18,13 @@ Route::middleware('auth:sanctum')->group(function() {
         $router->get('country-analytics', [AnalyticsController::class, 'getCountryAnalytics']);     
         $router->get('monthly-analytics', [AnalyticsController::class, 'monthlyAnalytics']);     
         $router->get('page-analytics', [AnalyticsController::class, 'getPageAnalytics']);     
+        $router->post('collect', [AnalyticsController::class, 'collect']);
     });
 
     Route::prefix('beta-tester')->group(function(Router $router) {
         $router->get('/', [BetaTesterController::class, 'index']);
+        $router->delete('/{betaTester}', [BetaTesterController::class, 'destroy']);
+        $router->post('import', [BetaTesterController::class, 'import']);
     });
 
     Route::prefix('users')->group(function(Router $router) {

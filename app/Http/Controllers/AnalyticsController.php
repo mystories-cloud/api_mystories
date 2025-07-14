@@ -6,8 +6,10 @@ use App\Models\CountryAnalytics;
 use App\Models\KeyMetric;
 use App\Models\PageAnalytic;
 use App\Models\TrafficSource;
+use App\Services\SendAnalyticsRequest;
 use App\Traits\ApiResponse\Response;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
@@ -55,5 +57,10 @@ class AnalyticsController extends Controller
     public function getPageAnalytics()
     {
         return $this->response(PageAnalytic::getData());
+    }
+
+    public function collect(Request $request, SendAnalyticsRequest $sendRequest)
+    {
+        return $sendRequest->handle($request);
     }
 }
