@@ -43,12 +43,20 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
             KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
         }
 
+        // if(count($keyMetrics['metrics']) > 0) {
+        //     KeyMetric::where('dateHour', 'like', '%'.$this->from.'%');
+        // }
+
         $trafficSources = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'traffic_sources');
 
         foreach($trafficSources['metrics'] as $index => $source) 
         {
             TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
         }
+
+        // if(count($trafficSources['metrics']) > 0) {
+        //     TrafficSource::where('dateHour', 'like', '%'.$this->from.'%');
+        // }
 
         $countryAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'country_analytics');
  
@@ -57,12 +65,20 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
             CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
         } 
 
+        // if(count($countryAnalytics['metrics']) > 0) {
+        //     CountryAnalytics::where('dateHour', 'like', '%'.$this->from.'%');
+        // }
+
         $pageAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'page_analytics');
 
         foreach($pageAnalytics['metrics'] as $index => $row)
         {
             PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
         } 
+
+        // if(count($pageAnalytics['metrics']) > 0) {
+        //     PageAnalytic::where('dateHour', 'like', '%'.$this->from.'%');
+        // }
     }
 }
  

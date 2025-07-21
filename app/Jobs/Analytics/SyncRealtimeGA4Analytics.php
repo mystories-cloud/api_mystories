@@ -29,7 +29,6 @@ class SyncRealtimeGA4Analytics implements ShouldQueue
      */
     public function handle(GoogleAnalyticsService $service): void
     {
-        
         $keyMetrics = $service->getRealtimeData(new GA4DataRowTransformer, 'key_metrics');
 
         foreach($keyMetrics['metrics'] as $index => $row)
