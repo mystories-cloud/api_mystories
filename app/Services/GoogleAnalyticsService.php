@@ -47,7 +47,7 @@ class GoogleAnalyticsService
             //     ]),
             // ]),
             'order_bys' => [
-                new OrderBy(['dimension' => new OrderBy\DimensionOrderBy(['dimension_name' => 'dateHour'])]),
+                new OrderBy(['dimension' => new OrderBy\DimensionOrderBy(['dimension_name' => 'date'])]),
             ],
 
             'metrics' => mapKeyArray('normal.' . $configKey . '.metrics', Metric::class),

@@ -12,7 +12,7 @@ return [
                 'engagementRate',
             ],
             'dimensions' => [
-                'dateHour',
+                'date',
                 'eventName',
             ],
             'events' => [
@@ -35,7 +35,7 @@ return [
                 'fullPageUrl',
                 'pagePath',
                 'pageTitle',
-                'dateHour'
+                'date'
             ],
         ],
         'traffic_sources' => [
@@ -44,7 +44,7 @@ return [
             ],
             'dimensions' => [
                 'sessionSource',
-                'dateHour',
+                'date',
             ],
         ],
         'country_analytics' => [
@@ -64,7 +64,7 @@ return [
             ],
             'dimesions' => [
                 'deviceCategory',
-                'dateHour'
+                'date'
             ],
         ],
         'default_dims' => [
