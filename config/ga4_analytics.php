@@ -55,7 +55,7 @@ return [
             ],
             'dimensions' => [
                 'country',
-                'dateHour',
+                'date',
             ],
         ],
         'device_analytics' => [
