@@ -17,7 +17,7 @@ function mapKeyArray(string $key, $class): array
 
 function convertGA4DateHourToDate($dimension)
 {
-    return array_key_exists('date', $dimension) ? Carbon::createFromFormat('YmdH', $dimension['date']) :
+    return array_key_exists('date', $dimension) ? Carbon::createFromFormat('Ymd', $dimension['date']) :
         Carbon::now()->subMinutes(5)->format('Y-m-d H:i:s');
 }
 
