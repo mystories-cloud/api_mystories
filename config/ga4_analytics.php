@@ -112,6 +112,8 @@ return [
             'averageSessionDuration',
             '/',
             '60',
+            '/',
+            'first_visit'
         ],
         'userEngagementDuration' => [
             'userEngagementDuration',
