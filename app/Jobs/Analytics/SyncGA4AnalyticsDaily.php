@@ -44,7 +44,18 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
         }
 
         if(count($keyMetrics['metrics']) > 0) {
-            KeyMetric::where('dateHour', 'like', '%'.$this->from.'%');
+            KeyMetric::where('dateHour', 'like', '%'.$this->from.'%')->delete();
+        }
+
+        $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics_events');
+
+        foreach($keyMetrics['metrics'] as $index => $row)
+        {
+            KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
+        }
+
+        if(count($keyMetrics['metrics']) > 0) {
+            KeyMetric::where('dateHour', 'like', '%'.$this->from.'%')->delete();
         }
 
         $trafficSources = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'traffic_sources');
@@ -55,7 +66,7 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
         }
 
         if(count($trafficSources['metrics']) > 0) {
-            TrafficSource::where('dateHour', 'like', '%'.$this->from.'%');
+            TrafficSource::where('dateHour', 'like', '%'.$this->from.'%')->delete();
         }
 
         $countryAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'country_analytics');
@@ -66,7 +77,7 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
         } 
 
         if(count($countryAnalytics['metrics']) > 0) {
-            CountryAnalytics::where('dateHour', 'like', '%'.$this->from.'%');
+            CountryAnalytics::where('dateHour', 'like', '%'.$this->from.'%')->delete();
         }
 
         $pageAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'page_analytics');
@@ -77,7 +88,7 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
         } 
 
         if(count($pageAnalytics['metrics']) > 0) {
-            PageAnalytic::where('dateHour', 'like', '%'.$this->from.'%');
+            PageAnalytic::where('dateHour', 'like', '%'.$this->from.'%')->delete();
         }
     }
 }

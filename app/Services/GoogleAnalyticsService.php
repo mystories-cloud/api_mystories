@@ -37,15 +37,6 @@ class GoogleAnalyticsService
                     'end_date' => $endDate,
                 ]),
             ],
-            // 'dimension_filter' => new FilterExpression([
-            //     'filter' => new Filter([
-            //         'field_name' => 'hour', // Filter on the 'hour' dimension
-            //         'numeric_filter' => new NumericFilter([
-            //             'operation' => Operation::EQUAL,
-            //             'value' => new NumericValue(['int64_value' => $hour]),
-            //         ]),
-            //     ]),
-            // ]),
             'order_bys' => [
                 new OrderBy(['dimension' => new OrderBy\DimensionOrderBy(['dimension_name' => 'date'])]),
             ],

@@ -24,29 +24,40 @@ Route::get('/', function (GoogleAnalyticsService $service) {
     $from = '2025-03-01';
     $to = '2025-07-21';
 
-    $keyMetrics = $service->getData(new GA4DataRowTransformer, $from, $to, 'key_metrics');
+    $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics');
 
-    foreach ($keyMetrics['metrics'] as $index => $row) {
-        KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
-    }
+        foreach($keyMetrics['metrics'] as $index => $row)
+        {
+            KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
+        }
 
-    $trafficSources = $service->getData(new GA4DataRowTransformer, $from, $to, 'traffic_sources');
+        $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics_events');
 
-    foreach ($trafficSources['metrics'] as $index => $source) {
-        TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
-    }
+        foreach($keyMetrics['metrics'] as $index => $row)
+        {
+            KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
+        }
 
-    $countryAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'country_analytics');
+        $trafficSources = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'traffic_sources');
 
-    foreach ($countryAnalytics['metrics'] as $index => $row) {
-        CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
-    }
+        foreach($trafficSources['metrics'] as $index => $source) 
+        {
+            TrafficSource::insertRow($row, $trafficSources['dimensions'][$index]);
+        }
 
-    $pageAnalytics = $service->getData(new GA4DataRowTransformer, $from, $to, 'page_analytics');
+        $countryAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'country_analytics');
+ 
+        foreach($countryAnalytics['metrics'] as $index => $row)
+        {
+            CountryAnalytics::insertRow($row, $countryAnalytics['dimensions'][$index]);
+        } 
 
-    foreach ($pageAnalytics['metrics'] as $index => $row) {
-        PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
-    }
+        $pageAnalytics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'page_analytics');
+
+        foreach($pageAnalytics['metrics'] as $index => $row)
+        {
+            PageAnalytic::insertRow($row, $pageAnalytics['dimensions'][$index]);
+        } 
 });
 
 Route::get('/analytics', [AnalyticsController::class, 'getKeyAnalytics']);

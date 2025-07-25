@@ -15,15 +15,14 @@ return [
                 'date',
                 'eventName',
             ],
-            'events' => [
-                'signup',
-                'form_submit',
-                'form_start',
-                'scroll',
-                'session_start',
-                'page_view',
-                'first_visit',
-                'user_engagement',
+        ],
+        'key_metrics_events' => [
+            'metrics' => [
+                'eventCount',
+            ],
+            'dimensions' => [
+                'date',
+                'eventName',
             ],
         ],
         'page_analytics' => [
@@ -100,22 +99,47 @@ return [
     ],
     'metric_calculations' => [
         'form_abandon' => [
-            "((", 'form_start', '-', 'form_submit', ')', '/', 'form_start', ')', '*', '100'
+            "((",
+            'form_start',
+            '-',
+            'form_submit',
+            ')',
+            '/',
+            'form_start',
+            ')',
+            '*',
+            '100'
         ],
         'averageSessionDuration' => [
-            'averageSessionDuration', '/', '60',
+            'averageSessionDuration',
+            '/',
+            '60',
         ],
         'userEngagementDuration' => [
-            'userEngagementDuration', '/', '60'
+            'userEngagementDuration',
+            '/',
+            '60'
         ],
         'engagementRate' => [
-            'engagedSessions', '/', 'session_start', '*', '100',
+            'engagedSessions',
+            '/',
+            'session_start',
+            '*',
+            '100',
         ],
         'bounceRate' => [
-            'bounceRate', '/', 'session_start', '*', '100'
+            'bounceRate',
+            '/',
+            'session_start',
+            '*',
+            '100'
         ],
         'conversion_rate' => [
-            'signup', '/', 'first_visit', '*', '100',
+            'signup',
+            '/',
+            'first_visit',
+            '*',
+            '100',
         ]
     ]
 ];
