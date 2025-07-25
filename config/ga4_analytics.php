@@ -7,7 +7,6 @@ return [
                 'userEngagementDuration',
                 'averageSessionDuration',
                 'engagedSessions',
-                'eventCount',
                 'bounceRate',
                 'engagementRate',
             ],
