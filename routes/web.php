@@ -22,7 +22,7 @@ Route::get('/', function (GoogleAnalyticsService $service) {
     // // SyncGA4Analytics::dispatch();
 
     $from = '2025-03-01';
-    $to = '2025-07-21';
+    $to = '2025-07-30';
 
     $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics');
 
