@@ -112,13 +112,13 @@ return [
             'averageSessionDuration',
             '/',
             '60',
-            '/',
-            'first_visit'
         ],
         'userEngagementDuration' => [
             'userEngagementDuration',
             '/',
-            '60'
+            '60',
+            '/',
+            'first_visit'
         ],
         'engagementRate' => [
             'engagedSessions',
