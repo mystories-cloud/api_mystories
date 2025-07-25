@@ -97,7 +97,7 @@ return [
     ],
     'metric_calculations' => [
         'form_abandon' => [
-            "((",
+            "(abs(",
             'form_start',
             '-',
             'form_submit',
