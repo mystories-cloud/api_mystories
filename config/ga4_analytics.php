@@ -13,7 +13,6 @@ return [
             ],
             'dimensions' => [
                 'date',
-                'eventName',
             ],
         ],
         'key_metrics_events' => [
