@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\BetaAppointmentController;
 use App\Http\Controllers\BetaTesterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,12 @@ Route::middleware('auth:sanctum')->group(function() {
         $router->get('/', [BetaTesterController::class, 'index']);
         $router->delete('/{betaTester}', [BetaTesterController::class, 'destroy']);
         $router->post('import', [BetaTesterController::class, 'import']);
+    });
+
+    Route::prefix('beta-appointment')->group(function(Router $router) {
+        $router->get('/', [BetaAppointmentController::class, 'index']);
+        $router->delete('/{betaAppointment}', [BetaAppointmentController::class, 'destroy']);
+        $router->post('import', [BetaAppointmentController::class, 'import']);
     });
 
     Route::prefix('users')->group(function(Router $router) {

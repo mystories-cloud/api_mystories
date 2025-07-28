@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('beta_testers', function (Blueprint $table) {
+        Schema::create('beta_appointments', function (Blueprint $table) {
+            $table->id();
+            $table->string('email', 100);
+            $table->string('name');
+            $table->string('phone', 20);
             $table->date('date')->nullable();
             $table->time('time')->nullable();
+            $table->timestamps();
         });
+        
     }
 
     /**
@@ -22,8 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('beta_testers', function (Blueprint $table) {
-            $table->dropColumn(['date', 'time']);
-        });
+        Schema::dropIfExists('beta_appointments');
     }
 };
