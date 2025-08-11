@@ -47,12 +47,12 @@ class SyncGA4AnalyticsDaily implements ShouldQueue
             KeyMetric::where('dateHour', 'like', '%'.$this->from.'%')->delete();
         }
 
-        $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics_events');
+        // $keyMetrics = $service->getData(new GA4DataRowTransformer, $this->from, $this->to, 'key_metrics_events');
 
-        foreach($keyMetrics['metrics'] as $index => $row)
-        {
-            KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
-        }
+        // foreach($keyMetrics['metrics'] as $index => $row)
+        // {
+        //     KeyMetric::insertRows($row, $keyMetrics['dimensions'][$index]);
+        // }
 
         if(count($keyMetrics['metrics']) > 0) {
             KeyMetric::where('dateHour', 'like', '%'.$this->from.'%')->delete();
